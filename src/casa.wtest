@@ -1,0 +1,32 @@
+import CuentaCorriente.*
+import casa.*
+import cosas.*
+
+test "extraer de cuenta corriente" {
+	cuentaCorriente.depositar(1000)
+	cuentaCorriente.extraer(900)
+	assert.equals(100, cuentaCorriente.saldo())
+}
+
+test "no puedo extraer 1200 de vacante" {
+	cuentaCorriente.depositar(1000)
+	assert.throwsException({(cuentaCorriente.extraer(1200))})
+	assert.equals(1000, cuentaCorriente.saldo())
+}
+
+test "comprar tira de asado" {
+	cuentaCorriente.depositar(1000)
+	casaDePepeYJulian.comprar(tiraDeAsado)
+	assert.equals(1,casaDePepeYJulian.cosas().size())
+	assert.equals(650,cuentaCorriente.saldo())
+	assert.that(casaDePepeYJulian.cosas().contains(tiraDeAsado))
+	
+}
+
+test "comprar tira de plancha" {
+	cuentaCorriente.depositar(1000)
+	casaDePepeYJulian.comprar(plancha)
+	assert.equals(0,casaDePepeYJulian.cosas().size())
+	assert.equals(1000,cuentaCorriente.saldo())
+	
+}
